@@ -1,5 +1,6 @@
 // Imports
 require("dotenv").config();
+require("./config/passport");
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");

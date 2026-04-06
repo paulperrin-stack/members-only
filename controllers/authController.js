@@ -54,3 +54,11 @@ exports.postSignUp = [
         }
     },
 ];
+
+exports.getLogIn = (req, res) => {
+    res.render("log-in", { error: null });
+};
+
+exports.getIndex = (req, res) => {
+    res.render("index", { user: req.user });
+}
