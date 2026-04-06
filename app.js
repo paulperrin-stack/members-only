@@ -6,6 +6,7 @@ const passport = require("passport");
 const path = require("path");
 const app = express();
 const pool = require("./db/pool");
+const authRouter = require("./routes/authRouter");
 
 // View engine
 app.set("views", path.join(__dirname, "views"));
@@ -24,6 +25,7 @@ app.use(session({
 // Initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use("/", authRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
