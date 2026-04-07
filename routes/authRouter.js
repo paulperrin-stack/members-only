@@ -3,10 +3,13 @@ const { ensureLoggedIn } = require("../middleware/auth");
 const router = Router();
 const authController = require("../controllers/authController");
 const passport = require("passport");
+const messageController = require("../controllers/messageController");
 
 // Routes
 router.get("/sign-up", authController.getSignUp);
 router.post("/sign-up", authController.postSignUp);
+router.get("/", messageController.getIndex);
+
 
 // Login Routes
 router.get("/log-in", authController.getLogIn);

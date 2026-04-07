@@ -10,7 +10,19 @@ const validateMessage = [
 
 // GET handler
 exports.getNewMessage = (req, res) => {
-    res.render("new-message", { error: [] });
+    res.render("new-message", { errors: [] });
+};
+
+exports.getIndex = async (req, res) => {
+    const { rows: messages } = await pool.query(`
+        SELECT  messages.id, messages.title, messages.text, messages.created_at,
+                users.first_name, users.last_name
+        FROM messages
+        JOIN users ON messages.user_id = users.id
+        ORDER BY messages.created_at DESC
+    `);
+
+    res.render("index", { user: req.user, messages });
 };
 
 // POST handler
