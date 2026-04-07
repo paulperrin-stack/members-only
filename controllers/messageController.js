@@ -45,3 +45,13 @@ exports.postNewMessage = [
         res.redirect("/");
     },
 ];
+
+// Delete Controller
+exports.deleteMessage = async (req, res) => {
+    await pool.query(
+        "DELETE FROM messages WHERE id = $1",
+        [req.params.id]
+    );
+
+    res.redirect("/");
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Become Admin</title>
+</head>
+<body>
+    <h1>Become an Admin</h1>
+
+    <% if (error) { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+
+    <form action="/admin" method="POST">
+        <div>
+            <label for="passcode">Admin Passcode</label>
+            <input type="text" id="passcode" name="passcode" required>
+        </div>
+        <button type="submit">Become Admin</button>
+    </form>
+
+    <a href="/">Back to Home</a>
+</body>
+</html>

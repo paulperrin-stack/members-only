@@ -19,6 +19,10 @@ exports.getJoin = (req, res) => {
     res.render("join", { error: null });
 };
 
+exports.getAdmin = (req, res) => {
+    res.render("admin", { error: null });
+};
+
 // Validation rules
 const validationSignUp = [
     body("firstName").trim().notEmpty().withMessage("First name is required"),
@@ -76,6 +80,21 @@ exports.postJoin = async (req, res) => {
     
     await pool.query(
         "UPDATE users SET member = true WHERE id = $1",
+        [req.user.id]
+    );
+
+    res.redirect("/");
+};
+
+exports.postAdmin = async (req, res) => {
+    const { passcode } = req.body;
+
+    if (passcode !== process.env.ADMIN_PASSCODE) {
+        return res.render("admin", { error: "Incorrect passcode" });
+    }
+
+    await pool.query(
+        "UPDATE users SET is_admin = true WHERE id = $1",
         [req.user.id]
     );
 

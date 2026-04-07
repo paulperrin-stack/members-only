@@ -35,4 +35,8 @@ router.get("/log-out", (req, res) => {
 router.get("/join", ensureLoggedIn, authController.getJoin);
 router.post("/join", ensureLoggedIn, authController.postJoin);
 
+// Admin Join Page
+router.get("/admin", ensureLoggedIn, authController.getAdmin);
+router.post("/admin", ensureLoggedIn, authController.postAdmin);
+
 module.exports = router;
