@@ -9,6 +9,7 @@ const app = express();
 const pool = require("./db/pool");
 const authRouter = require("./routes/authRouter");
 const flash = require("connect-flash");
+const messageRouter = require("./routes/messageRouter");
 
 // View engine
 app.set("views", path.join(__dirname, "views"));
@@ -30,6 +31,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", authRouter);
+
+// New Message
+app.use("/", messageRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
