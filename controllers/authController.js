@@ -7,6 +7,18 @@ exports.getSignUp = (req, res) => {
     res.render("sign-up", { errors: [] });
 };
 
+exports.getLogIn = (req, res) => {
+    res.render("log-in", { error: req.flash("error")[0] || null });
+};
+
+exports.getIndex = (req, res) => {
+    res.render("index", { user: req.user });
+};
+
+exports.getJoin = (req, res) => {
+    res.render("join", { error: null });
+};
+
 // Validation rules
 const validationSignUp = [
     body("firstName").trim().notEmpty().withMessage("First name is required"),
@@ -55,10 +67,17 @@ exports.postSignUp = [
     },
 ];
 
-exports.getLogIn = (req, res) => {
-    res.render("log-in", { error: null });
-};
+exports.postJoin = async (req, res) => {
+    const { passcode } = req.body;
 
-exports.getIndex = (req, res) => {
-    res.render("index", { user: req.user });
-}
+    if (passcode !== process.env.CLUB_PASSCODE) {
+        return res.render("join", { error: "Incorrect passcode "});
+    }
+    
+    await pool.query(
+        "UPDATE users SET member = true WHERE id = $1",
+        [req.user.id]
+    );
+
+    res.redirect("/");
+};

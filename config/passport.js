@@ -13,6 +13,12 @@ passport.use(new LocalStrategy(
                 [email]
             );
 
+            const user = rows[0];
+
+            if (!user) {
+                return done(null, false, { message: "Incorret email" });
+            }
+
             const match = await bcrypt.compare(password, user.password);
 
             if (!match) {
@@ -20,7 +26,7 @@ passport.use(new LocalStrategy(
             }
 
             return done(null, user);
-        } catch {
+        } catch (err) {
             return done(err);
         }
     }
@@ -39,7 +45,7 @@ passport.deserializeUser(async (id, done) => {
         );
         done(null, rows[0]);
     } catch (err) {
-        done(err);
+        return done(err);
     }
 });
 

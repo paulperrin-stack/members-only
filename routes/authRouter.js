@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { ensureLoggedIn } = require("../middleware/auth");
 const router = Router();
 const authController = require("../controllers/authController");
 const passport = require("passport");
@@ -14,7 +15,7 @@ router.post(
     passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/log-in",
-        failureFlash: false,
+        failureFlash: true,
     })
 );
 
@@ -26,5 +27,9 @@ router.get("/log-out", (req, res) => {
         res.redirect("/");
     });
 });
+
+// ensureLoggedIn
+router.get("/join", ensureLoggedIn, authController.getJoin);
+router.post("/join", ensureLoggedIn, authController.postJoin);
 
 module.exports = router;

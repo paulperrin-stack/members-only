@@ -8,6 +8,7 @@ const path = require("path");
 const app = express();
 const pool = require("./db/pool");
 const authRouter = require("./routes/authRouter");
+const flash = require("connect-flash");
 
 // View engine
 app.set("views", path.join(__dirname, "views"));
@@ -22,6 +23,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+
+app.use(flash());
 
 // Initialize passport
 app.use(passport.initialize());
